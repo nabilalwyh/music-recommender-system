@@ -174,9 +174,48 @@ Dataset ini terdiri atas 2.049.119 baris dan 25 kolom. Terdiri atas 7 kolom yang
 > **Kesimpulan:**
 > Sebagian besar fitur numerik memiliki distribusi data yang wajar dan tidak ekstrem. Beberapa fitur seperti `speechiness`, `instrumentalness`, dan `tempo` mengandung outlier, namun hal ini bisa mencerminkan keragaman jenis lagu (misalnya lagu instrumental, rap, atau lagu tempo cepat). Oleh karena itu, outlier tidak akan dihapus karena tetap relevan dan mencerminkan variasi alami dalam musik.
 
-
- 
 ## Data Preparation
+### Data Cleaning
+#### Menentukan df_sample yang digunakan
+Karena jumlah data asli terlalu banyak, jadi saya hanya menggunakan 5k data dengan country berfokus di Indonesia saja.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/22f16c5a-4c1f-407a-aa9c-268b0f437f00" width="1000"/>
+</p>
+
+#### Menghapus kolom yang tidak relevan
+Menghapus kolom `daily_rank`, `daily_movement`, `weekly_movement`, `country`, `snapshot_date`, `album_name`, `album_release_date`, `key`, `mode`, `time_signature` karena tidak relevan dengan tujuan. 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bcd4306b-c17e-406d-b458-f6ce1786beff" width="1000"/>
+</p>
+
+#### Melakukan konversi duration_ms ke dalam menit 
+Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.99. 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/856d7f1a-a7d8-4a5b-a886-0e9b800efb58" width="600"/>
+</p>
+
+#### Menangani Kolom name dan Artist
+Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.99. 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ad40d05b-3d78-46d1-a635-9a86ff51e7ce" width="600"/>
+</p>
+
+#### Encoding Categorical
+Program di bawah ini digunakan untuk mengubah nilai dari kolom is_explicit menjadi 1 untuk True, dan 0 untuk False
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e4267b30-c550-4b63-8671-dd20803cde3d" width="600"/>
+</p>
+
+#### Standarisasi
+Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma dengan range 0 hingga 1 dan menyeragamkan karena memiliki satuan yang berbeda pada tiap fitur.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/54c5536f-6546-4330-bfcf-33fda348f62a" width="600"/>
+</p>
+
+#### Dataset hasil data cleaning, encoding, dan standarisasi
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d0efd32f-063b-4a5b-9788-90b120ae4f1a" width="600"/>
+</p>
 
 
 **Rubrik/Kriteria Tambahan (Opsional)**: 

@@ -112,7 +112,7 @@ Dataset ini terdiri atas 2.049.119 baris dan 25 kolom. Terdiri atas 7 kolom yang
 
 #### Memeriksa Data duplikat
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/39b7272d-57d8-41fc-a12c-aefaeb3f0664" width="400"/>
+  <img src="https://github.com/user-attachments/assets/39b7272d-57d8-41fc-a12c-aefaeb3f0664" width="1000"/>
 </p>
 
 > **Insight:**

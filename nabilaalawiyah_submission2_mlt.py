@@ -10,7 +10,7 @@ Original file is located at
 
 - **Nama:** Nabila Alawiyah
 - **Email:** nabilaalawiyah.25@gmail.com
-- **ID Dicoding:** nabila_alawiyah_B1OF
+- **ID Dicoding:** nabilaalawiyah
 
 # Project Overview
 

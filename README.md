@@ -217,28 +217,142 @@ Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih 
   <img src="https://github.com/user-attachments/assets/d0efd32f-063b-4a5b-9788-90b120ae4f1a" width="1000"/>
 </p>
 
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
-
 ## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+### Cosine Similarity
+Mengetahui cosine similarity menggunakan features pilihan
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6dd8fd7c-bcda-4209-b1b3-1a65298feeb3" width="600"/>
+</p>
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-- Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b32bb16f-8ccd-4b89-bb50-049419cb7ded" width="600"/>
+</p>
+
+### Inference
+Melakukan inference dengan membuat dan memanggil function recommend_by_identifier seperti pada program di bawah ini.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b46cf792-768b-467d-b22d-0b29c76da40a" width="600"/>
+</p>
+
+
+### Kelebihan dan kekurangan pendekatan Content-Based Filtering
+**a. Rekomendasi Berdasarkan Fitur Lagu**
+CBF memanfaatkan fitur seperti `genre`, `artist`, `track name`, `tempo`, `energy`, `danceability`, dan lainnya. Sistem dapat merekomendasikan lagu yang mirip dengan lagu yang sering didengarkan pengguna, meskipun lagu tersebut tidak populer secara global.
+> Contoh: Jika seorang pengguna sering mendengarkan lagu dengan tempo cepat dan genre Latin, CBF akan menyarankan lagu-lagu lain dengan karakteristik serupa.
+
+**b. Tidak Perlu Data dari Pengguna Lain**
+Sistem tetap bisa bekerja meski hanya ada sedikit data pengguna, karena rekomendasi dibangun berdasarkan histori interaksi user itu sendiri dan fitur konten lagu.
+> Cocok untuk pengguna baru di negara tertentu yang belum banyak memiliki data komunitas Spotify di wilayahnya.
+
+**c. Efektif untuk Lagu Baru atau Niche**
+CBF dapat merekomendasikan lagu-lagu yang belum banyak didengar orang (belum populer), tapi punya karakteristik yang mirip dengan lagu yang disukai pengguna.
+> Berguna untuk mengenalkan lagu-lagu lokal di masing-masing negara dalam dataset (73 negara), meski belum viral secara global.
+
+**d. Lebih Personal dan Bisa Dijelaskan**
+CBF memungkinkan sistem menjelaskan alasan suatu lagu direkomendasikan, seperti:
+> "Lagu ini memiliki energi tinggi dan genre pop, mirip dengan lagu-lagu yang sering Anda dengarkan."
+
+**e. Mengurangi Risiko Bias Popularitas**
+Sistem tidak hanya merekomendasikan lagu yang sedang trending, tetapi juga lagu yang sesuai dengan selera unik pengguna, meskipun kurang dikenal secara umum.
+
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+### Penjelasan Metrik
+Metrik yang digunakan untuk mengevaluasi seberapa baik model *content-based filtering* dalam memberikan rekomendasi adalah **Precision\@k**, **Recall\@k**, dan **F1-Score\@k**.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Metrik-metrik ini merupakan bagian dari evaluasi berbasis relevansi, yang biasa digunakan dalam sistem rekomendasi dan *information retrieval*.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+1. **Precision\@k**
+   Precision\@k digunakan untuk mengukur proporsi item yang relevan dari total item yang direkomendasikan sebanyak *k*.
+   Artinya, metrik ini menunjukkan seberapa **tepat** sistem dalam memberikan rekomendasi.
+   Formula:
 
-**---Ini adalah bagian akhir laporan---**
+   $$\text{Precision@k} = \frac{\text{Jumlah item relevan dalam rekomendasi}}{k}$$
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+2. **Recall\@k**
+   Recall\@k digunakan untuk mengukur proporsi item relevan yang berhasil ditemukan oleh sistem dari seluruh item relevan yang tersedia.
+   Metrik ini menunjukkan seberapa **lengkap** sistem dalam menangkap item relevan.
+   Formula:
+   
+   $$\text{Recall@k} = \frac{\text{Jumlah item relevan dalam rekomendasi}}{\text{Jumlah total item relevan}}$$
+
+4. **F1-Score\@k**
+   F1-Score\@k merupakan rata-rata harmonik dari Precision dan Recall. Metrik ini digunakan untuk memberikan keseimbangan antara ketepatan dan kelengkapan rekomendasi.
+   Formula:
+
+   $$\text{F1-Score@k} = \frac{2 \times \text{Precision@k} \times \text{Recall@k}}{\text{Precision@k} + \text{Recall@k}}$$
+   
+### Contoh Penerapan Metrik
+Penerapan metrik dilakukan dengan membuat ground truth, lalu membuat fungsi evaluate_single_recommendation dengan parameter song_id, recommend_func, ground_truth, k=10.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0b8b636a-917c-4ff4-a318-07db64ba58df" width="600"/>
+</p>
+
+Selanjutnya, fungsi tersebut dipanggil sehingga menampilkan output di bawah ini.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/27e3782c-c18f-4f4d-be11-bec10b806d31" width="600"/>
+</p>
+
+> **Insight:**
+> * Recall = 1.0. Artinya sistem rekomendasi dapat menemukan semua lagu relevan
+> * Precision = 0.4. Artinya sistem masih banyak merekomendasikan yang kurang tepat.
+
+## Menjawab Problems
+### 1. Mengetahui siapa saja top 10 penyanyi di Indonesia
+Untuk mengetahui siapa saja top 10 penyanyi di Indonesia, pertama-tama adalah melakukan filter data hanya untuk country dengan kode "ID", lalu melakukan perhitungan popularitasnya, dan menampilkan visualisasi ke dalam bar chart. Menggunakan program di bawah ini:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e66f7bf5-ce25-4c12-8617-168d0ce3b19a" width="800"/>
+</p>
+
+Akan menghasilkan visualisasi sebagai berikut.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a4ef6dd3-5287-4be5-9582-1642548b783f" width="800"/>
+</p>
+
+> **Insight:**
+> * Bernadya jadi artis paling populer di Spotify Indonesia (skor: 521.5) berkat kombinasi popularitas tinggi dan jumlah lagu terbanyak (1556 lagu).
+> * Juicy Luicy dan Hindia menyusul di posisi 2 dan 3, menunjukkan konsistensi rilisan dan basis pendengar yang kuat.
+> * Lyodra dan Feby Putri punya popularitas rata-rata tertinggi (79.17 & 78.51) meski jumlah lagu lebih sedikit. Menandakan kualitas lagu yang tinggi.
+> * Tulus tetap masuk top 5 meskipun produktivitasnya lebih rendah dari yang lain. Menunjukkan lagu-lagunya tahan lama dan terus diputar.
+
+### 2. Mengetahui faktor apa saja yang memengaruhi popularitas lagu
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ca696ccf-efbc-45c1-9d0f-cdf09785a512" width="800"/>
+</p>
+
+**Insight:**
+1. Fitur yang Paling Positif Berkorelasi dengan Popularitas:
+
+   * Valence (0.43): Artinya lagu yang terdengar lebih positif atau ceria cenderung lebih populer
+   * Energy (0.38): Artinya lagu dengan energi tinggi seperti beat cepat dan suara yang kuat cenderung menarik lebih banyak pendengar.
+   * Danceability (0.43): Artinya lagu yang mudah untuk berdansa juga berhubungan positif dengan popularitas.
+
+2. Fitur yang Berkorelasi Negatif dengan Popularitas:
+
+   * Speechiness (-0.15): Artinya lagu yang terlalu mirip dengan pidato atau spoken-word (misalnya banyak narasi atau rap kering) cenderung kurang populer
+   * Acousticness (-0.07): Artinya lagu yang sangat akustik (tanpa banyak instrumen elektronik) sedikit kurang populer.
+   * Tempo (-0.01): Artinya tempo tidak terlalu berpengaruh terhadap popularitas lagu.
+
+3. Fitur Lain yang Kurang Berpengaruh:
+
+   * Liveness, Instrumentalness, Loudness, dan Tempo memiliki korelasi sangat rendah terhadap popularitas, menunjukkan bahwa faktor-faktor ini tidak terlalu menentukan tingkat popularitas sebuah lagu dalam dataset ini.
+
+
+**Kesimpulan:**
+
+Fitur-fitur seperti **valence**, **danceability**, dan **energy** memiliki kontribusi paling besar terhadap popularitas lagu. Artinya, lagu yang upbeat, enerjik, dan ceria lebih cenderung disukai oleh pendengar global. Sebaliknya, lagu yang terlalu akustik atau banyak mengandung narasi tidak terlalu populer.
+
+### 3. Mengetahui cara membuat sistem rekomendasi terbaik yang dapat diimplementasikan.
+Membuat function run_recommendation yang berisi inference berdasarkan input pengguna. Function ini akan memberikan rekomendasi musik dengan memanggil function recommend_by_identifier.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f17b31d1-6518-4259-a9ce-0895e1c9139a" width="800"/>
+</p>
+
+Output yang dihasilkan adalah sebagai berikut.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/868f8db1-0715-40db-a330-872603b9e4d7" width="800"/>
+</p>
+
+## Referensi
+1. Celma, Ò., & Herrera, P. (2008, October). A new approach to evaluating novel recommendations. In Proceedings of the 2008 ACM conference on Recommender systems (pp. 179-186).
+2. Schedl, M., Knees, P., & Gouyon, F. (2017, August). New paths in music recommender systems research. In Proceedings of the Eleventh ACM Conference on Recommender Systems (pp. 392-393).

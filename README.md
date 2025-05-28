@@ -214,7 +214,7 @@ Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih 
 
 #### Dataset hasil data cleaning, encoding, dan standarisasi
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d0efd32f-063b-4a5b-9788-90b120ae4f1a" width="600"/>
+  <img src="https://github.com/user-attachments/assets/d0efd32f-063b-4a5b-9788-90b120ae4f1a" width="1000"/>
 </p>
 
 

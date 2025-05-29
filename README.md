@@ -203,7 +203,7 @@ Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lal
 </p>
 
 #### Menangani Kolom name dan Artist
-Program di bawah ini digunakan untuk menggabungkan kolom name dan artis menjadi unique_key_songs.
+Program di bawah ini digunakan untuk menggabungkan kolom name dan artis menjadi unique_song_key.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/200f31e7-c121-49f3-bd44-5fc1962a7971" width="600"/>
 </p>

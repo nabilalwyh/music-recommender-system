@@ -28,7 +28,7 @@ Untuk mencapai goals tersebut, solution statements yang diusulkan adalah:
 ## Data Understanding
 Data yang digunakan untuk membuat sistem rekomendasi musik diambil dari platform open source Kaggle dan dipublikasikan oleh asaniczka, [Top Spotify Songs in 73 Countries (Daily Updated)](https://www.kaggle.com/datasets/asaniczka/top-spotify-songs-in-73-countries-daily-updated)
 
-Dataset ini terdiri atas 2.049.119 baris dan 25 kolom. Terdiri atas 7 kolom yang bertipe data object, 8 kolom bertipe data int64, 9 kolom bertipe data float64, dan 1 kolom bertipe data boolean. Setiap kolom memiliki arti sebagai berikut.
+Dataset ini terdiri atas 2.059.916 baris dan 25 kolom. Terdiri atas 7 kolom yang bertipe data object, 8 kolom bertipe data int64, 9 kolom bertipe data float64, dan 1 kolom bertipe data boolean. Setiap kolom memiliki arti sebagai berikut.
 
 | Variabel           | Tipe Data | Keterangan                                                                 |
 |--------------------|-----------|---------------------------------------------------------------------------|
@@ -197,7 +197,7 @@ Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lal
 #### Menangani Kolom name dan Artist
 Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.99. 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ad40d05b-3d78-46d1-a635-9a86ff51e7ce" width="600"/>
+  <img src="https://github.com/user-attachments/assets/200f31e7-c121-49f3-bd44-5fc1962a7971" width="600"/>
 </p>
 
 #### Encoding Categorical
@@ -209,31 +209,40 @@ Program di bawah ini digunakan untuk mengubah nilai dari kolom is_explicit menja
 #### Standarisasi
 Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma dengan range 0 hingga 1 dan menyeragamkan karena memiliki satuan yang berbeda pada tiap fitur.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/54c5536f-6546-4330-bfcf-33fda348f62a" width="600"/>
+  <img src="https://github.com/user-attachments/assets/20d64fc2-e752-4b25-af91-acd15e813aa2" width="600"/>
 </p>
 
 #### Dataset hasil data cleaning, encoding, dan standarisasi
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d0efd32f-063b-4a5b-9788-90b120ae4f1a" width="1000"/>
+  <img src="https://github.com/user-attachments/assets/e01bd0cc-0dbe-41f0-ba7c-5aae87d718bb" width="1000"/>
 </p>
 
 ## Modeling
 ### Cosine Similarity
 Mengetahui cosine similarity menggunakan features pilihan
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6dd8fd7c-bcda-4209-b1b3-1a65298feeb3" width="600"/>
+  <img src="https://github.com/user-attachments/assets/a93474cd-5341-458e-a52d-97a1ef66b1d6" width="600"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b32bb16f-8ccd-4b89-bb50-049419cb7ded" width="600"/>
+  <img src="https://github.com/user-attachments/assets/45117a96-d967-430b-80d0-6f0b975540f8" width="600"/>
 </p>
 
 ### Inference
 Melakukan inference dengan membuat dan memanggil function recommend_by_identifier seperti pada program di bawah ini.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b46cf792-768b-467d-b22d-0b29c76da40a" width="600"/>
+  <img src="https://github.com/user-attachments/assets/c84b6eab-d55c-4942-a3bb-b35969c56159" width="600"/>
 </p>
 
+Contoh penggunaan function recommend_by_identifier, pada lagu NIKI - Take A Chance With Me dengan top_n = 10. 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4c928743-6c23-4345-a506-4bdbc58da7ce" width="600"/>
+</p>
+
+Contoh penggunaan function recommend_by_identifier, pada Juicy Luicy - Tampar dengan top_n = 5. 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ab301cae-805f-4ec9-86f8-95d776050aed" width="600"/>
+</p>
 
 ### Kelebihan dan kekurangan pendekatan Content-Based Filtering
 **a. Rekomendasi Berdasarkan Fitur Lagu**
@@ -285,17 +294,19 @@ Metrik-metrik ini merupakan bagian dari evaluasi berbasis relevansi, yang biasa 
 ### Contoh Penerapan Metrik
 Penerapan metrik dilakukan dengan membuat ground truth, lalu membuat fungsi evaluate_single_recommendation dengan parameter song_id, recommend_func, ground_truth, k=10.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0b8b636a-917c-4ff4-a318-07db64ba58df" width="600"/>
+  <img src="https://github.com/user-attachments/assets/7c35cb78-6a91-4c53-8789-c71dbf4221ce" width="600"/>
 </p>
 
 Selanjutnya, fungsi tersebut dipanggil sehingga menampilkan output di bawah ini.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/27e3782c-c18f-4f4d-be11-bec10b806d31" width="600"/>
+  <img src="https://github.com/user-attachments/assets/728f6d1e-2204-47db-b84e-72ab9b983ca1" width="600"/>
 </p>
 
 > **Insight:**
-> * Recall = 1.0. Artinya sistem rekomendasi dapat menemukan semua lagu relevan
-> * Precision = 0.4. Artinya sistem masih banyak merekomendasikan yang kurang tepat.
+> * Precision@5 = 0.6, artinya dari 5 lagu yang direkomendasikan, rata-rata 60% adalah lagu yang relevan. Ini menunjukkan bahwa sebagian besar rekomendasi cukup tepat sasaran, meskipun masih ada ruang untuk perbaikan agar hasil rekomendasi semakin relevan.
+> * Recall@5 = 0.75, artinya dari seluruh lagu relevan yang tersedia, 75% berhasil ditemukan oleh sistem dalam top-5. Ini menandakan bahwa sistem mampu menjangkau sebagian besar lagu yang seharusnya direkomendasikan.
+> * F1-Score@5 = 0.6667 menunjukkan keseimbangan yang cukup baik antara Precision dan Recall, yang berarti sistem memiliki performa yang solid dalam memberikan rekomendasi yang relevan secara proporsional.
+> * Relevant Found seperti “yung kai - blue”, “Nadin Amizah - Bertaut”, dan “Tulus - Hati-Hati di Jalan” memperkuat bahwa sistem berhasil menyarankan lagu-lagu yang mirip secara musikal atau emosional dengan lagu acuan.
 
 ## Menjawab Problems
 ### 1. Mengetahui siapa saja top 10 penyanyi di Indonesia
@@ -350,7 +361,7 @@ Membuat function run_recommendation yang berisi inference berdasarkan input peng
 
 Output yang dihasilkan adalah sebagai berikut.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/868f8db1-0715-40db-a330-872603b9e4d7" width="800"/>
+  <img src="https://github.com/user-attachments/assets/717ed426-0fe0-4f72-95b3-fae1fdaace08" width="800"/>
 </p>
 
 ## Referensi

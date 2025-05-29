@@ -197,13 +197,13 @@ Menghapus kolom `daily_rank`, `daily_movement`, `weekly_movement`, `country`, `s
 </p>
 
 #### Melakukan konversi duration_ms ke dalam menit 
-Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.99. 
+Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.999. 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/856d7f1a-a7d8-4a5b-a886-0e9b800efb58" width="600"/>
 </p>
 
 #### Menangani Kolom name dan Artist
-Program di bawah ini digunakan untuk melakukan konversi dari detik ke menit, lalu hasilnya akan menggunakan format 3 angka di belakang koma, contohnya 9.99. 
+Program di bawah ini digunakan untuk menggabungkan kolom name dan artis menjadi unique_key_songs.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/200f31e7-c121-49f3-bd44-5fc1962a7971" width="600"/>
 </p>

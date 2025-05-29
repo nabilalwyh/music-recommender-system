@@ -336,26 +336,20 @@ Akan menghasilkan visualisasi sebagai berikut.
 
 ### 2. Mengetahui faktor apa saja yang memengaruhi popularitas lagu
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ca696ccf-efbc-45c1-9d0f-cdf09785a512" width="800"/>
+  <img src="https://github.com/user-attachments/assets/ae55a290-c790-401f-99f7-8817728f4304" width="800"/>
 </p>
 
 **Insight:**
 1. Fitur yang Paling Positif Berkorelasi dengan Popularitas:
-
-   * Valence (0.43): Artinya lagu yang terdengar lebih positif atau ceria cenderung lebih populer
-   * Energy (0.38): Artinya lagu dengan energi tinggi seperti beat cepat dan suara yang kuat cenderung menarik lebih banyak pendengar.
-   * Danceability (0.43): Artinya lagu yang mudah untuk berdansa juga berhubungan positif dengan popularitas.
-
+   * Tidak ada fitur yang memiliki korelasi kuat dengan popularitas. Korelasi tertinggi masih sangat lemah.
+   * Valence (0.04), energy (-0.02), dan danceability (-0.05) hanya menunjukkan korelasi sangat lemah terhadap popularitas. Nilai-nilai ini terlalu kecil untuk dianggap signifikan secara praktis.
 2. Fitur yang Berkorelasi Negatif dengan Popularitas:
-
-   * Speechiness (-0.15): Artinya lagu yang terlalu mirip dengan pidato atau spoken-word (misalnya banyak narasi atau rap kering) cenderung kurang populer
-   * Acousticness (-0.07): Artinya lagu yang sangat akustik (tanpa banyak instrumen elektronik) sedikit kurang populer.
-   * Tempo (-0.01): Artinya tempo tidak terlalu berpengaruh terhadap popularitas lagu.
+   * Speechiness (-0.15): Memiliki korelasi negatif paling besar terhadap popularitas, artinya lagu yang terdengar seperti berbicara (seperti spoken word atau rap yang kering) cenderung kurang populer.
+   * Acousticness (-0.07) dan tempo (-0.01) juga menunjukkan korelasi negatif, tapi sangat kecil — artinya dampaknya terhadap popularitas sangat terbatas.
 
 3. Fitur Lain yang Kurang Berpengaruh:
 
-   * Liveness, Instrumentalness, Loudness, dan Tempo memiliki korelasi sangat rendah terhadap popularitas, menunjukkan bahwa faktor-faktor ini tidak terlalu menentukan tingkat popularitas sebuah lagu dalam dataset ini.
-
+   * Liveness (-0.04), instrumentalness (0.05), loudness (0.00), dan tempo (-0.01) menunjukkan hampir tidak ada hubungan dengan popularitas. Mereka dapat dianggap sebagai fitur yang tidak terlalu berpengaruh dalam dataset ini.
 
 **Kesimpulan:**
 

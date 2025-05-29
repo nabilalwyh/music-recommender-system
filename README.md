@@ -112,7 +112,15 @@ Dataset ini terdiri atas 2.059.916 baris dan 25 kolom. Terdiri atas 7 kolom yang
 
 #### Memeriksa Data duplikat
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/39b7272d-57d8-41fc-a12c-aefaeb3f0664" width="1000"/>
+  <img src="https://github.com/user-attachments/assets/b966327e-1515-4f7e-a99c-4abe8550ce2d" width="1000"/>
+</p>
+
+> **Insight:**
+> 1. Tidak ada data yang duplikat
+
+#### Memeriksa Data Missing Value
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c074d2ae-618e-49fe-adf7-76fad622c3b1" width="1000"/>
 </p>
 
 > **Insight:**
@@ -207,7 +215,7 @@ Program di bawah ini digunakan untuk mengubah nilai dari kolom is_explicit menja
 </p>
 
 #### Standarisasi
-Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma dengan range 0 hingga 1 dan menyeragamkan karena memiliki satuan yang berbeda pada tiap fitur.
+Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma dan menyeragamkan karena memiliki satuan yang berbeda pada tiap fitur.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/20d64fc2-e752-4b25-af91-acd15e813aa2" width="600"/>
 </p>
@@ -217,7 +225,7 @@ Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih 
   <img src="https://github.com/user-attachments/assets/e01bd0cc-0dbe-41f0-ba7c-5aae87d718bb" width="1000"/>
 </p>
 
-## Modeling
+## Modeling and Result
 ### Cosine Similarity
 Mengetahui cosine similarity menggunakan features pilihan
 <p align="center">

@@ -227,7 +227,7 @@ Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih 
 
 ## Modeling and Result
 ### Cosine Similarity
-Mengetahui cosine similarity menggunakan features pilihan
+Mengetahui cosine similarity menggunakan dataset hasil data cleaning, encoding, dan standarisasi
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a93474cd-5341-458e-a52d-97a1ef66b1d6" width="600"/>
 </p>

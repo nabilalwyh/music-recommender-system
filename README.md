@@ -112,7 +112,7 @@ Dataset ini terdiri atas 2.059.916 baris dan 25 kolom. Terdiri atas 7 kolom yang
 
 #### Memeriksa Data duplikat
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b966327e-1515-4f7e-a99c-4abe8550ce2d" width="1000"/>
+  <img src="https://github.com/user-attachments/assets/b966327e-1515-4f7e-a99c-4abe8550ce2d" width="400"/>
 </p>
 
 > **Insight:**
@@ -120,7 +120,7 @@ Dataset ini terdiri atas 2.059.916 baris dan 25 kolom. Terdiri atas 7 kolom yang
 
 #### Memeriksa Data Missing Value
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c074d2ae-618e-49fe-adf7-76fad622c3b1" width="1000"/>
+  <img src="https://github.com/user-attachments/assets/c074d2ae-618e-49fe-adf7-76fad622c3b1" width="400"/>
 </p>
 
 > **Insight:**
@@ -227,30 +227,37 @@ Proses standarisasi membantu untuk membuat fitur data menjadi bentuk yang lebih 
 
 ## Modeling and Result
 ### Cosine Similarity
-Mengetahui cosine similarity menggunakan dataset hasil data cleaning, encoding, dan standarisasi
+Model rekomendasi ini dibangun menggunakan pendekatan content-based filtering, yang berfokus pada kesamaan atribut antar lagu untuk menghasilkan rekomendasi. Sistem ini menggunakan metrik cosine similarity untuk mengukur tingkat kemiripan antar lagu berdasarkan fitur-fitur numerik yang telah dinormalisasi, seperti danceability, energy, loudness, speechiness_log, acousticness, instrumentalness_log, liveness, valence, tempo, dan duration_ms_log. Beberapa fitur mengalami transformasi logaritmik (_log) untuk mengurangi skewness dan membuat distribusi lebih normal sebelum proses perhitungan similarity dilakukan.
+
+Cosine similarity sendiri bekerja dengan menghitung sudut antara dua vektor dalam ruang fitur multidimensi. Nilai cosine similarity berkisar dari -1 (sangat berbeda) hingga 1 (sangat mirip). Dalam konteks sistem rekomendasi ini, nilai yang mendekati 1 menunjukkan bahwa dua lagu memiliki karakteristik musikal yang serupa, sedangkan nilai mendekati -1 menunjukkan perbedaan signifikan antar lagu.
+
+Pemilihan cosine similarity didasarkan pada kemampuannya untuk mengukur kesamaan arah antar vektor tanpa terpengaruh oleh perbedaan skala nilai fitur. Ini penting karena fitur-fitur seperti tempo dan loudness memiliki rentang nilai yang berbeda, namun arah dan pola hubungan antar fitur lebih penting dibandingkan besarannya.
+
+Berikut contoh penerapan untuk mengetahui cosine similarity dengan dataset hasil data cleaning, encoding, dan standarisasi
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a93474cd-5341-458e-a52d-97a1ef66b1d6" width="600"/>
+  <img src="https://github.com/user-attachments/assets/a93474cd-5341-458e-a52d-97a1ef66b1d6" width="1000"/>
 </p>
 
+Setelah mendapatkan nilai cosine similarity antar lagu menggunakan fungsi cosine_similarity, hasilnya dikonversi ke dalam sebuah DataFrame bernama cosine_sim_df, dengan indeks dan kolom berupa unique_song_key, yaitu kombinasi unik antara nama artis dan judul lagu. Matriks ini digunakan untuk membandingkan seluruh pasangan lagu berdasarkan kemiripan fitur audio mereka, seperti danceability, energy, acousticness, dan lainnya.
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/45117a96-d967-430b-80d0-6f0b975540f8" width="600"/>
+  <img src="https://github.com/user-attachments/assets/45117a96-d967-430b-80d0-6f0b975540f8" width="1000"/>
 </p>
 
-> Model rekomendasi ini dibangun menggunakan pendekatan content-based filtering, yang berfokus pada kesamaan atribut antar lagu untuk menghasilkan rekomendasi. Sistem ini menggunakan metrik cosine similarity untuk mengukur kemiripan antar lagu berdasarkan fitur-fitur numerik yang telah dinormalisasi, yaitu: danceability, energy, loudness, speechiness_log, acousticness, instrumentalness_log, liveness, valence, tempo, dan duration_ms_log. Fitur dengan akhiran _log merupakan hasil transformasi logaritmik untuk mengurangi skewness dan membuat distribusi lebih normal sebelum proses perhitungan kesamaan.
->
-> Cosine similarity bekerja dengan menghitung sudut antara dua vektor dalam ruang fitur multidimensi. Nilai cosine similarity berkisar dari -1 (berlawanan total) hingga 1 (sangat mirip). Dalam konteks sistem rekomendasi ini, nilai yang mendekati 1 menunjukkan bahwa dua lagu memiliki karakteristik yang sangat mirip secara musikal, sedangkan nilai mendekati -1 menunjukkan perbedaan yang signifikan.
->
-> Pemilihan cosine similarity didasarkan pada kemampuannya menangkap pola kesamaan antar lagu tanpa terpengaruh oleh perbedaan skala antar fitur. Hal ini penting karena fitur-fitur musik seperti tempo dan loudness memiliki rentang nilai yang berbeda, namun arah hubungan antar fitur lebih penting dibandingkan besarannya
+Output print('Shape:', cosine_sim_df.shape) menunjukkan bahwa terdapat 210 lagu yang dibandingkan, sehingga terbentuk matriks berukuran 210x210. Setiap elemen dalam matriks tersebut mewakili skor kemiripan antara dua lagu. Misalnya, skor similarity sebesar 0.896 antara lagu "James Arthur, Anne-Marie - Rewrite The Stars" dan "Katy Perry - Wide Awake" menunjukkan kemiripan tinggi, sedangkan skor -0.617 antara "Feby Putri, Fiersa Besari - Runtuh" dan "Nidji - Hapus Aku" menunjukkan perbedaan yang besar. Matriks ini menjadi fondasi utama sistem rekomendasi untuk menemukan lagu-lagu yang mirip berdasarkan kontennya.
+
 
 ### Inference
-Melakukan inference dengan membuat dan memanggil function recommend_by_identifier seperti pada program di bawah ini.
+Untuk melakukan inference berdasarkan lagu tertentu, digunakan fungsi recommend_by_identifier(). Fungsi ini memiliki dua parameter: song_identifier (judul lagu yang dijadikan acuan) dan top_n (jumlah rekomendasi yang diinginkan). Fungsi akan mengambil nilai kemiripan lagu tersebut terhadap semua lagu lain dalam cosine_sim_df, mengurutkannya secara menurun, lalu mengembalikan top_n lagu dengan skor similarity tertinggi—tentunya tanpa menyertakan lagu itu sendiri.
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c84b6eab-d55c-4942-a3bb-b35969c56159" width="600"/>
+  <img src="https://github.com/user-attachments/assets/c84b6eab-d55c-4942-a3bb-b35969c56159" width="1000"/>
 </p>
 
-Contoh penggunaan function recommend_by_identifier, pada lagu NIKI - Take A Chance With Me dengan top_n = 10. 
+Contoh penggunaan function recommend_by_identifier, pada lagu NIKI - Take A Chance With Me dengan top_n = 10.  Sistem akan merekomendasikan 10 lagu yang memiliki karakteristik audio paling mirip dengan lagu tersebut. Beberapa lagu yang muncul dalam daftar rekomendasi antara lain "Devano - Surat Hati" dan "Aziz Hedra - Somebody's Pleasure", yang menunjukkan bahwa model mampu mengidentifikasi lagu dengan nuansa dan warna musik yang serupa.
+Melakukan inference dengan membuat dan memanggil function recommend_by_identifier seperti pada program di bawah ini.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4c928743-6c23-4345-a506-4bdbc58da7ce" width="600"/>
+  <img src="https://github.com/user-attachments/assets/4c928743-6c23-4345-a506-4bdbc58da7ce" width="1000"/>
 </p>
 
 > Sebagai contoh hasil implementasi, sistem merekomendasikan 10 lagu paling mirip terhadap lagu input "NIKI - Take A Chance With Me", di antaranya: "Devano - Surat Hati", "Aziz Hedra - Somebody's Pleasure", dan lainnya, yang secara fitur memiliki karakteristik mirip. Ini menunjukkan model mampu mengidentifikasi lagu-lagu dengan warna dan nuansa serupa.
@@ -261,7 +268,7 @@ Contoh penggunaan function recommend_by_identifier, pada Juicy Luicy - Tampar de
   <img src="https://github.com/user-attachments/assets/ab301cae-805f-4ec9-86f8-95d776050aed" width="600"/>
 </p>
 
-> Sebagai contoh lain dari hasil implementasi, sistem rekomendasi dengan top_n = 5 akan merekomendasikan 5 lagu paling mirip terhadap lagu "Juicy Luicy - Tampar".
+> Begitu pula saat fungsi dipanggil dengan recommend_by_identifier("Juicy Luicy - Tampar", top_n=5), sistem mengembalikan lima lagu yang paling mirip secara musikal dengan lagu tersebut. Ini membuktikan bahwa pendekatan content-based filtering berbasis cosine similarity dapat memberikan rekomendasi yang relevan berdasarkan kemiripan fitur-fitur audio.
 
 ### Kelebihan dan kekurangan pendekatan Content-Based Filtering
 **a. Rekomendasi Berdasarkan Fitur Lagu**
@@ -367,7 +374,8 @@ Akan menghasilkan visualisasi sebagai berikut.
 Fitur-fitur seperti **valence**, **danceability**, dan **energy** memiliki kontribusi paling besar terhadap popularitas lagu. Artinya, lagu yang upbeat, enerjik, dan ceria lebih cenderung disukai oleh pendengar global. Sebaliknya, lagu yang terlalu akustik atau banyak mengandung narasi tidak terlalu populer.
 
 ### 3. Mengetahui cara membuat sistem rekomendasi terbaik yang dapat diimplementasikan.
-Membuat function run_recommendation yang berisi inference berdasarkan input pengguna. Function ini akan memberikan rekomendasi musik dengan memanggil function recommend_by_identifier.
+Untuk menjawab permasalahan ini, dibuatlah sebuah fungsi bernama `run_recommendation()`. Fungsi ini merupakan implementasi sistem rekomendasi berbasis content-based filtering yang dirancang untuk memberikan saran lagu kepada pengguna berdasarkan lagu yang mereka sukai. Sistem ini bekerja dengan meminta input berupa nama lagu, kemudian mencocokkannya dengan data yang tersedia dalam matriks kemiripan (cosine similarity) antar lagu. Jika lagu ditemukan, sistem akan menggunakan fungsi `recommend_by_identifier()` untuk menampilkan 10 lagu teratas yang memiliki kemiripan tertinggi dengan lagu input berdasarkan fitur-fitur seperti danceability, energy, valence, dan lainnya. Nilai cosine similarity digunakan untuk mengukur kedekatan antar lagu dalam ruang fitur, di mana semakin tinggi nilainya, semakin mirip kedua lagu tersebut. Hasil rekomendasi ditampilkan secara interaktif kepada pengguna lengkap dengan skor kemiripan, sehingga pengguna dapat memahami alasan di balik rekomendasi yang diberikan. Dengan pendekatan ini, sistem menjadi intuitif, relevan, dan mudah diimplementasikan dalam aplikasi nyata untuk meningkatkan pengalaman mendengarkan musik pengguna.
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f17b31d1-6518-4259-a9ce-0895e1c9139a" width="800"/>
 </p>
@@ -376,6 +384,8 @@ Output yang dihasilkan adalah sebagai berikut.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/717ed426-0fe0-4f72-95b3-fae1fdaace08" width="800"/>
 </p>
+
+Hasil sistem rekomendasi lagu berdasarkan input "Bernadya - Satu Bulan" menunjukkan performa yang cukup baik dalam menyajikan lagu-lagu dengan karakteristik serupa. Hal ini terlihat dari munculnya beberapa lagu lain dari Bernadya sendiri, seperti "Kata Mereka Ini Berlebihan", "Masa Sepi", dan "Lama-Lama", yang menempati posisi tinggi dalam daftar dengan nilai similarity yang cukup besar. Ini mengindikasikan bahwa sistem mampu mengenali konsistensi gaya musik dan nuansa emosional khas dari artis tersebut. Selain itu, rekomendasi juga mencakup lagu-lagu dari musisi dengan genre pop balada yang serupa, seperti Tiara Andini, Arsy Widianto, dan Fabio Asher. Lagu-lagu seperti "Usai", "Cintanya Aku", dan "Rumah Singgah" memiliki sentuhan melankolis yang sejalan dengan nuansa lagu Satu Bulan. Menariknya, sistem juga menampilkan lagu dari artis internasional seperti SZA dan Bruno Mars, yang meskipun berasal dari ranah global, tetap dinilai memiliki kemiripan dari sisi mood dan aransemen musik. Secara keseluruhan, nilai similarity yang konsisten di atas 0.79 menunjukkan bahwa sistem ini cukup stabil dan relevan dalam memberikan rekomendasi lagu berdasarkan kesamaan emosional, gaya vokal, dan karakter musik.
 
 ## Referensi
 1. Celma, Ò., & Herrera, P. (2008, October). A new approach to evaluating novel recommendations. In Proceedings of the 2008 ACM conference on Recommender systems (pp. 179-186).

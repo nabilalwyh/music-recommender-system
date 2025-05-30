@@ -347,9 +347,9 @@ Akan menghasilkan visualisasi sebagai berikut.
 </p>
 
 > **Insight:**
-> * Bernadya jadi artis paling populer di Spotify Indonesia (skor: 521.5) berkat kombinasi popularitas tinggi dan jumlah lagu terbanyak (1556 lagu).
+> * Bernadya jadi artis paling populer di Spotify Indonesia (skor: 522.4) berkat kombinasi popularitas tinggi dan jumlah lagu terbanyak (1556 lagu).
 > * Juicy Luicy dan Hindia menyusul di posisi 2 dan 3, menunjukkan konsistensi rilisan dan basis pendengar yang kuat.
-> * Lyodra dan Feby Putri punya popularitas rata-rata tertinggi (79.17 & 78.51) meski jumlah lagu lebih sedikit. Menandakan kualitas lagu yang tinggi.
+> * Lyodra dan Feby Putri punya popularitas rata-rata tertinggi meski jumlah lagu lebih sedikit. Menandakan kualitas lagu yang tinggi.
 > * Tulus tetap masuk top 5 meskipun produktivitasnya lebih rendah dari yang lain. Menunjukkan lagu-lagunya tahan lama dan terus diputar.
 
 ### 2. Mengetahui faktor apa saja yang memengaruhi popularitas lagu
